@@ -1,7 +1,5 @@
 # HeyRoommate-Sceia
 
-# HeyRoommate – Trabajo Práctico de SQL
-
 ## 1. Introducción
 HeyRoommate es una aplicación diseñada para facilitar que las personas encuentren compañeros de habitación (roommates) de manera segura y organizada. La plataforma permite que los usuarios se registren, busquen propiedades compartidas y realicen reservas, priorizando la experiencia de convivencia sobre el simple alquiler.
 
