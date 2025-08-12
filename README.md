@@ -82,3 +82,4 @@ El flujo básico es:
 | fecha_resena     | Fecha en que se dejó la reseña                      | DATE            |              |
 
 [Script SQL Tablas](tablas.sql)
+[Script SQL Inserts de Prueba](ejemplo_inserts.sql)
