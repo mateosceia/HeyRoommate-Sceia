@@ -26,8 +26,7 @@ El flujo básico es:
 3. Una vez finalizada la estancia, el usuario puede dejar una reseña.
 
 ## 4. Diagrama Entidad-Relación
-
-
+!(Diagrama_ER.png)
 
 ## 5. Listado de Tablas
 
