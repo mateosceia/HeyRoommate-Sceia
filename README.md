@@ -26,60 +26,76 @@ El flujo básico es:
 ## 4. Diagrama Entidad-Relación
 ![Grafico Diagrama E-R](Diagrama_ER.png)
 
-
 ## 5. Listado de Tablas
-
 ### Tabla: `usuarios`
-| Campo              | Descripción                                        | Tipo de dato    | Clave        |
-|--------------------|----------------------------------------------------|-----------------|--------------|
-| id_usuario         | Identificador único del usuario                     | INT             | PK           |
-| nombre             | Nombre del usuario                                 | VARCHAR(50)     |              |
-| apellido           | Apellido del usuario                               | VARCHAR(50)     |              |
-| email              | Correo electrónico (único)                         | VARCHAR(100)    | UNIQUE       |
-| codigo_telefonico  | Código internacional del teléfono                  | VARCHAR(5)      |              |
-| telefono           | Número de teléfono                                 | VARCHAR(20)     |              |
-| nacionalidad       | Nacionalidad del usuario                           | VARCHAR(50)     |              |
-| fecha_nacimiento   | Fecha de nacimiento del usuario                    | DATE            |              |
+| Campo             | Tipo de dato          | Clave      | Descripción                                 |
+|-------------------|----------------------|------------|---------------------------------------------|
+| id_usuario        | INT AUTO_INCREMENT   | PK         | Identificador único del usuario              |
+| nombre            | VARCHAR(50)          |            | Nombre del usuario                           |
+| apellido          | VARCHAR(50)          |            | Apellido del usuario                         |
+| email             | VARCHAR(100)         | UNIQUE     | Correo electrónico único                     |
+| codigo_telefonico | VARCHAR(5)           |            | Código internacional del teléfono           |
+| telefono          | VARCHAR(20)          |            | Número de teléfono                           |
+| nacionalidad      | VARCHAR(50)          |            | Nacionalidad del usuario                      |
+| fecha_nacimiento  | DATE                 |            | Fecha de nacimiento                          |
+| fecha_registro    | DATE                 |            | Fecha en que se registró en la plataforma    |
+
+---
 
 ### Tabla: `propietarios`
-| Campo             | Descripción                                        | Tipo de dato    | Clave        |
-|-------------------|----------------------------------------------------|-----------------|--------------|
-| id_propietario    | Identificador único del propietario                 | INT             | PK           |
-| nombre            | Nombre del propietario                             | VARCHAR(50)     |              |
-| apellido          | Apellido del propietario                           | VARCHAR(50)     |              |
-| email             | Correo electrónico (único)                         | VARCHAR(100)    | UNIQUE       |
-| fecha_registro    | Fecha en que el propietario se unió a la plataforma | DATE            |              |
+| Campo             | Tipo de dato          | Clave      | Descripción                                 |
+|-------------------|----------------------|------------|---------------------------------------------|
+| id_propietario    | INT AUTO_INCREMENT   | PK         | Identificador único del propietario          |
+| nombre            | VARCHAR(50)          |            | Nombre del propietario                       |
+| apellido          | VARCHAR(50)          |            | Apellido del propietario                     |
+| email             | VARCHAR(100)         | UNIQUE     | Correo electrónico único                     |
+| codigo_telefonico | VARCHAR(5)           |            | Código internacional del teléfono           |
+| telefono          | VARCHAR(20)          |            | Número de teléfono                           |
+| fecha_registro    | DATE                 |            | Fecha en que se registró como propietario    |
+
+---
 
 ### Tabla: `propiedades`
-| Campo               | Descripción                                        | Tipo de dato    | Clave        |
-|---------------------|----------------------------------------------------|-----------------|--------------|
-| id_propiedad        | Identificador único de la propiedad                 | INT             | PK           |
-| id_propietario      | Identificador del propietario                       | INT             | FK           |
-| direccion           | Dirección completa de la propiedad                  | VARCHAR(255)    |              |
-| ciudad              | Ciudad donde se ubica la propiedad                  | VARCHAR(100)    |              |
-| pais                | País de la propiedad                                | VARCHAR(100)    |              |
-| capacidad_maxima    | Cantidad máxima de usuarios que pueden habitarla    | INT             |              |
-| habitaciones        | Número de habitaciones disponibles                  | INT             |              |
-| banos               | Número de baños disponibles                         | INT             |              |
+| Campo             | Tipo de dato          | Clave      | Descripción                                 |
+|-------------------|----------------------|------------|---------------------------------------------|
+| id_propiedad      | INT AUTO_INCREMENT   | PK         | Identificador único de la propiedad          |
+| id_propietario    | INT                  | FK         | Identificador del propietario (foránea)     |
+| titulo            | VARCHAR(100)         |            | Título descriptivo de la propiedad           |
+| descripcion       | TEXT                 |            | Descripción detallada                         |
+| tipo              | VARCHAR(50)          |            | Tipo de propiedad (departamento, casa, etc.)|
+| habitaciones      | INT                  |            | Cantidad de habitaciones                      |
+| capacidad_maxima  | INT                  |            | Máximo número de usuarios permitidos         |
+| precio_noche      | DECIMAL(10,2)        |            | Precio por noche                              |
+| direccion         | VARCHAR(150)         |            | Dirección completa                            |
+| ciudad            | VARCHAR(50)          |            | Ciudad donde se ubica                         |
+| pais              | VARCHAR(50)          |            | País donde se ubica                           |
+| disponible_desde  | DATE                 |            | Fecha desde la cual está disponible           |
+| disponible_hasta  | DATE                 |            | Fecha hasta la cual está disponible (opcional)|
+
+---
 
 ### Tabla: `reservas`
-| Campo            | Descripción                                        | Tipo de dato    | Clave        |
-|------------------|----------------------------------------------------|-----------------|--------------|
-| id_reserva       | Identificador único de la reserva                   | INT             | PK           |
-| id_usuario       | Identificador del usuario                           | INT             | FK           |
-| id_propiedad     | Identificador de la propiedad                       | INT             | FK           |
-| fecha_inicio     | Fecha de inicio de la reserva                       | DATE            |              |
-| fecha_fin        | Fecha de finalización de la reserva                 | DATE            |              |
+| Campo             | Tipo de dato          | Clave      | Descripción                                 |
+|-------------------|----------------------|------------|---------------------------------------------|
+| id_reserva        | INT AUTO_INCREMENT   | PK         | Identificador único de la reserva            |
+| id_usuario        | INT                  | FK         | Usuario que realiza la reserva (foránea)    |
+| id_propiedad      | INT                  | FK         | Propiedad reservada (foránea)                |
+| fecha_inicio      | DATE                 |            | Fecha de inicio de la reserva                 |
+| fecha_fin         | DATE                 |            | Fecha de fin de la reserva                     |
+| estado            | ENUM                 |            | Estado de la reserva (pendiente, aceptada, rechazada, cancelada) |
+| fecha_creacion    | TIMESTAMP            |            | Fecha y hora en que se creó la reserva        |
+
+---
 
 ### Tabla: `resenas`
-| Campo            | Descripción                                        | Tipo de dato    | Clave        |
-|------------------|----------------------------------------------------|-----------------|--------------|
-| id_resena        | Identificador único de la reseña                    | INT             | PK           |
-| id_usuario       | Usuario que dejó la reseña                          | INT             | FK           |
-| id_propiedad     | Propiedad evaluada                                  | INT             | FK           |
-| comentario       | Texto con la opinión del usuario                    | TEXT            |              |
-| puntuacion       | Calificación numérica (1 a 5)                       | INT             |              |
-| fecha_resena     | Fecha en que se dejó la reseña                      | DATE            |              |
+| Campo             | Tipo de dato          | Clave      | Descripción                                 |
+|-------------------|----------------------|------------|---------------------------------------------|
+| id_resena         | INT AUTO_INCREMENT   | PK         | Identificador único de la reseña             |
+| id_usuario        | INT                  | FK         | Usuario que dejó la reseña (foránea)        |
+| id_propiedad      | INT                  | FK         | Propiedad evaluada (foránea)                 |
+| calificacion      | INT                  |            | Calificación numérica (1 a 5)                 |
+| comentario        | TEXT                 |            | Comentario textual                           |
+| fecha_resena      | DATE                 |            | Fecha en que se realizó la reseña            |
 
 [Script SQL Tablas](tablas.sql)
 [Script SQL Inserts de Prueba](ejemplo_inserts.sql)
