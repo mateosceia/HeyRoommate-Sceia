@@ -83,4 +83,4 @@ El flujo básico es:
 | puntuacion       | Calificación numérica (1 a 5)                       | INT             |              |
 | fecha_resena     | Fecha en que se dejó la reseña                      | DATE            |              |
 
-[Script SQl Tablas](tablas.sql)
+[Script SQL Tablas](tablas.sql)
