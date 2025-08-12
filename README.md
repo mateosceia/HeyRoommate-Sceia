@@ -82,3 +82,5 @@ El flujo básico es:
 | comentario       | Texto con la opinión del usuario                    | TEXT            |              |
 | puntuacion       | Calificación numérica (1 a 5)                       | INT             |              |
 | fecha_resena     | Fecha en que se dejó la reseña                      | DATE            |              |
+
+[Script SQl Tablas](tablas.sql)
