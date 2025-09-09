@@ -272,7 +272,7 @@ El flujo básico es:
 
 [Script SQL Creación de Vistas, Funciones, Stored Procedures y Triggers](script_vst_fn_sp_tg.sql)
 
-[Script SQL Inserts de Prueba](ejemplo_inserts.sql)
+[Script SQL Inserción de Datos](ejemplo_inserts.sql)
 
 ---
 
