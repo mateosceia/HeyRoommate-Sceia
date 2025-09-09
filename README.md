@@ -106,6 +106,8 @@ El flujo básico es:
 
 [Script SQL Tablas](tablas.sql)
 
+---
+
 ## 6. Listado de Vistas
 
 ### `vista_reservas_activas`
