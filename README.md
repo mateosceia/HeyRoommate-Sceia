@@ -106,8 +106,6 @@ El flujo básico es:
 
 [Script SQL Tablas](tablas.sql)
 
-[Script SQL Inserts de Prueba](ejemplo_inserts.sql)
-
 ## 6. Listado de Vistas
 
 ### `vista_reservas_activas`
@@ -269,6 +267,10 @@ El flujo básico es:
 - **Objetivo:** Registrar cambios en reseñas.  
 - **Descripción:** Insertan registros en la auditoría al crear, actualizar o eliminar reseñas.  
 - **Tablas:** `resenas`, `auditoria`.
+
+[Script SQL Creación de Vistas, Funciones, Stored Procedures y Triggers](script_vst_fn_sp_tg.sql)
+
+[Script SQL Inserts de Prueba](ejemplo_inserts.sql)
 
 ---
 
