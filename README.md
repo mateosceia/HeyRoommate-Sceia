@@ -107,3 +107,168 @@ El flujo básico es:
 [Script SQL Tablas](tablas.sql)
 
 [Script SQL Inserts de Prueba](ejemplo_inserts.sql)
+
+## 6. Listado de Vistas
+
+### `vista_reservas_activas`
+- **Objetivo:** Consultar las reservas activas en curso.  
+- **Descripción:** Muestra las reservas aceptadas cuya fecha actual se encuentre entre la fecha de inicio y la de fin.  
+- **Tablas:** `reservas`, `usuarios`, `propiedades`.
+
+### `vista_reservas_pendientes`
+- **Objetivo:** Listar las reservas en estado pendiente.  
+- **Descripción:** Presenta datos del inquilino, la propiedad y las fechas de cada reserva pendiente.  
+- **Tablas:** `reservas`, `usuarios`, `propiedades`.
+
+### `vista_propiedades_calificacion`
+- **Objetivo:** Evaluar propiedades en base a reseñas.  
+- **Descripción:** Muestra el promedio de calificación y la cantidad de reseñas por propiedad.  
+  Los resultados se ordenan de **mayor a menor calificación promedio**.  
+- **Tablas:** `propiedades`, `resenas`.
+
+### `vista_ingresos_propiedades`
+- **Objetivo:** Analizar ingresos estimados por propiedad.  
+- **Descripción:** Calcula los ingresos generados a partir de reservas aceptadas, multiplicando noches por precio.  
+  Los resultados se ordenan de **mayor a menor ingreso estimado**.  
+- **Tablas:** `propiedades`, `reservas`.
+
+### `vista_inquilinos_reservas`
+- **Objetivo:** Identificar los inquilinos con más reservas.  
+- **Descripción:** Cuenta la cantidad total de reservas por usuario con rol de inquilino.  
+  Los resultados se ordenan de **mayor a menor cantidad de reservas**.  
+- **Tablas:** `usuarios`, `reservas`.
+
+### `vista_propiedades_vencidas`
+- **Objetivo:** Detectar propiedades cuya disponibilidad ya venció.  
+- **Descripción:** Muestra propiedades con fecha de disponibilidad final anterior a la actual.  
+- **Tablas:** `propiedades`.
+
+### `vista_usuarios_inactivos`
+- **Objetivo:** Encontrar usuarios sin actividad en la plataforma.  
+- **Descripción:** Lista usuarios que no tienen reservas ni propiedades asociadas.  
+- **Tablas:** `usuarios`, `reservas`, `propiedades`.
+
+### `vista_auditoria_reciente`
+- **Objetivo:** Monitorear cambios recientes.  
+- **Descripción:** Lista las operaciones registradas en auditoría durante los últimos 7 días.  
+- **Tablas:** `auditoria`.
+
+### `vista_auditoria_usuarios_eliminados`
+- **Objetivo:** Seguir el rastro de usuarios eliminados.  
+- **Descripción:** Muestra auditorías relacionadas con eliminaciones en la tabla `usuarios`.  
+- **Tablas:** `auditoria`.
+
+### `vista_auditoria_reservas_estado`
+- **Objetivo:** Analizar modificaciones en reservas.  
+- **Descripción:** Lista actualizaciones sobre cambios de estado en reservas.  
+- **Tablas:** `auditoria`.
+
+### `vista_auditoria_propiedades`
+- **Objetivo:** Controlar inserciones y eliminaciones de propiedades.  
+- **Descripción:** Registra acciones de alta y baja de propiedades.  
+- **Tablas:** `auditoria`.
+
+### `vista_auditoria_resumen`
+- **Objetivo:** Resumir la actividad de auditoría.  
+- **Descripción:** Agrupa acciones por tabla y tipo de operación, mostrando el total de registros.  
+- **Tablas:** `auditoria`.
+
+---
+
+## 7. Listado Funciones
+
+### `fn_promedio_calificacion(idProp)`
+- **Objetivo:** Obtener la calificación promedio de una propiedad.  
+- **Descripción:** Devuelve el promedio de las reseñas de una propiedad específica.  
+- **Tablas:** `resenas`.
+
+### `fn_cantidad_resenas_propiedad(idProp)`
+- **Objetivo:** Contar las reseñas de una propiedad.  
+- **Descripción:** Devuelve el número total de reseñas asociadas a una propiedad.  
+- **Tablas:** `resenas`.
+
+### `fn_total_noches_propiedad(idProp)`
+- **Objetivo:** Calcular la cantidad total de noches reservadas.  
+- **Descripción:** Suma la diferencia en noches de todas las reservas aceptadas de una propiedad.  
+- **Tablas:** `reservas`.
+
+### `fn_ingresos_propiedad(idProp)`
+- **Objetivo:** Calcular ingresos totales de una propiedad.  
+- **Descripción:** Multiplica noches reservadas por el precio de la propiedad para reservas aceptadas.  
+- **Tablas:** `reservas`, `propiedades`.
+
+### `fn_cantidad_reservas_usuario(idUser)`
+- **Objetivo:** Contar reservas realizadas por un usuario.  
+- **Descripción:** Devuelve la cantidad total de reservas de un usuario específico.  
+- **Tablas:** `reservas`.
+
+---
+
+## 8. Listado Stored Procedures
+
+### `sp_registrar_usuario`
+- **Objetivo:** Registrar un nuevo usuario.  
+- **Descripción:** Valida que el email no exista previamente y luego inserta un nuevo registro en la tabla de usuarios.  
+- **Tablas:** `usuarios`.
+
+### `sp_registrar_propiedad`
+- **Objetivo:** Registrar una nueva propiedad.  
+- **Descripción:** Valida que el usuario sea un propietario y agrega la propiedad con sus características.  
+- **Tablas:** `usuarios`, `propiedades`.
+
+### `sp_registrar_reserva`
+- **Objetivo:** Registrar una reserva.  
+- **Descripción:** Verifica que el usuario sea inquilino válido y que las fechas sean correctas antes de crear la reserva.  
+- **Tablas:** `usuarios`, `reservas`.
+
+### `sp_cambiar_estado_reserva`
+- **Objetivo:** Cambiar el estado de una reserva existente.  
+- **Descripción:** Actualiza el estado de la reserva (pendiente, aceptada, rechazada, cancelada o finalizada).  
+- **Tablas:** `reservas`.
+
+### `sp_insertar_resena`
+- **Objetivo:** Insertar una reseña.  
+- **Descripción:** Valida que el usuario haya completado una estadía en la propiedad antes de permitir la reseña.  
+- **Tablas:** `reservas`, `resenas`.
+
+---
+
+## 9. Listado de Triggers
+
+### `trg_no_borrar_usuario_con_propiedades`
+- **Objetivo:** Proteger integridad de datos.  
+- **Descripción:** Impide borrar un usuario que tenga propiedades activas.  
+- **Tabla:** `usuarios`.
+
+### `trg_validar_reserva`
+- **Objetivo:** Evitar reservas superpuestas.  
+- **Descripción:** Bloquea la inserción de una reserva si se solapa con otra ya aceptada.  
+- **Tabla:** `reservas`.
+
+### `trg_finalizar_reserva`
+- **Objetivo:** Actualizar automáticamente reservas vencidas.  
+- **Descripción:** Cambia el estado de la reserva a "finalizada" si ya pasó la fecha de fin.  
+- **Tabla:** `reservas`.
+
+### Triggers de auditoría sobre `usuarios`
+- **Objetivo:** Registrar cambios en usuarios.  
+- **Descripción:** Insertan registros en la auditoría cuando se crean, actualizan o eliminan usuarios.  
+- **Tablas:** `usuarios`, `auditoria`.
+
+### Triggers de auditoría sobre `propiedades`
+- **Objetivo:** Registrar cambios en propiedades.  
+- **Descripción:** Insertan registros en la auditoría al crear, actualizar o eliminar propiedades.  
+- **Tablas:** `propiedades`, `auditoria`.
+
+### Triggers de auditoría sobre `reservas`
+- **Objetivo:** Registrar cambios en reservas.  
+- **Descripción:** Insertan registros en la auditoría al crear, actualizar o eliminar reservas.  
+- **Tablas:** `reservas`, `auditoria`.
+
+### Triggers de auditoría sobre `resenas`
+- **Objetivo:** Registrar cambios en reseñas.  
+- **Descripción:** Insertan registros en la auditoría al crear, actualizar o eliminar reseñas.  
+- **Tablas:** `resenas`, `auditoria`.
+
+---
+
