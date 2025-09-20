@@ -92,6 +92,55 @@ El flujo básico es:
 
 ---
 
+### Tabla: `pagos`
+
+| Campo             | Tipo de dato          | Clave      | Descripción                                   |
+|-------------------|----------------------|------------|-----------------------------------------------|
+| id_pago           | INT AUTO_INCREMENT   | PK         | Identificador único del pago                   |
+| id_reserva        | INT                  | FK         | Identificador único de la reseña               |
+| monto             | DECIMAL(10,2)        |            | Monto pagado                                   |
+| fecha_pago        | DATE                 |            | Fecha cuando se realizo el pago                |
+| metodo_pago       | ENUM                 |            | Metodo utilizado: tarjeta o transferencia      |
+
+---
+
+### Tabla: `mensajes`
+
+| Campo             | Tipo de dato          | Clave      | Descripción                                   |
+|-------------------|----------------------|------------|-----------------------------------------------|
+| id_mensaje        | INT AUTO_INCREMENT   | PK         | Identificador único del pago                   |
+| id_emisor         | INT                  | FK         | Usuario que envio el mensaje                   |
+| id_receptor       | INT                  | FK         | Usuario que recibe el mensaje                  |
+| mensaje           | VARCHAR(500)         |            | Texto enviado                                  |
+| fecha_envio       | DATE                 |            | Fecha cuando se envio el mensaje               |
+
+---
+
+### Tabla: `imagenes_propiedades`
+
+| Campo             | Tipo de dato          | Clave      | Descripción                                   |
+|-------------------|----------------------|------------|-----------------------------------------------|
+| id_imagen         | INT AUTO_INCREMENT   | PK         | Identificador único de la imagen               |
+| id_propiedad      | INT                  | FK         | Identificador único de la propiedad            |
+| url_imagen        | VARCHAR(255)         |            | Dirección web de la imagen                     |
+| descripcion       | VARCHAR(100)         |            | Descripción detallada de la imagen             |
+
+---
+
+### Tabla: `hechos_reservas`
+
+| Campo             | Tipo de dato          | Clave      | Descripción                                   |
+|-------------------|----------------------|------------|-----------------------------------------------|
+| id_hecho          | INT AUTO_INCREMENT   | PK         | Identificador único del hecho                  |
+| id_reserva        | INT                  | FK         | Identificador de la reserva                    |
+| id_usuario        | INT                  | FK         | Usuario que realiza la reserva                 |
+| id_propiedad      | INT                  | FK         | Propiedad reservada                            |
+| noches_reserva    | INT                  |            | Cantidad de noches reservadas                  |
+| ingreso_total     | DATE                 |            | Ingreso total generado                         |
+| calificacion      | ENUM                 |            | Puntuación entre 1 y 5                         |
+
+---
+
 ### Tabla: `auditoria`
 
 | Campo                | Tipo de dato          | Clave      | Descripción                                   |
