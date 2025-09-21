@@ -419,7 +419,7 @@ En el informe se reflejan los siguientes puntos principales:
      - Ingreso total acumulado.   
    - Esto permite comparar el rendimiento de cada propiedad y elaborar un ranking de las más exitosas.
   
-[Dashboards](dashboards.sql)
+[Dashboards](dashboards.pbix)
 
 ---
 
