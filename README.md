@@ -1,5 +1,17 @@
 # HeyRoommate-Sceia
 
+## 📑 Índice
+1. [Introducción](#1-introducción)  
+2. [Situación Problemática](#2-situación-problemática)  
+3. [Modelo de Negocio](#3-modelo-de-negocio)  
+4. [Diagrama Entidad-Relación](#4-diagrama-entidad-relación)  
+5. [Listado de Tablas](#5-listado-de-tablas)  
+6. [Listado de Vistas](#6-listado-de-vistas)  
+7. [Listado Funciones](#7-listado-funciones)  
+8. [Listado Stored Procedures](#8-listado-stored-procedures)  
+9. [Listado de Triggers](#9-listado-de-triggers)  
+
+
 ## 1. Introducción
 HeyRoommate es una aplicación diseñada para facilitar que las personas encuentren compañeros de habitación (roommates) de manera segura y organizada. La plataforma permite que los usuarios se registren, busquen propiedades compartidas y realicen reservas, priorizando la experiencia de convivencia sobre el simple alquiler.
 
@@ -222,6 +234,11 @@ El flujo básico es:
 - **Descripción:** Agrupa acciones por tabla y tipo de operación, mostrando el total de registros.  
 - **Tablas:** `auditoria`.
 
+### `vista_pagos_propiedades`
+- **Objetivo:** Consultar pagos asociados a propiedades.  
+- **Descripción:** Muestra los pagos realizados sobre reservas, asociados a cada propiedad.  
+- **Tablas:** `pagos`, `reservas`, `propiedades`.
+
 ---
 
 ## 7. Listado Funciones
@@ -250,6 +267,16 @@ El flujo básico es:
 - **Objetivo:** Contar reservas realizadas por un usuario.  
 - **Descripción:** Devuelve la cantidad total de reservas de un usuario específico.  
 - **Tablas:** `reservas`.
+
+### `fn_total_pagado_reserva(idReserva)`
+- **Objetivo:** Consultar el total pagado por una reserva.  
+- **Descripción:** Suma los pagos registrados de una reserva.  
+- **Tablas:** `pagos`.
+
+### `fn_cantidad_mensajes_usuario(idUser)`
+- **Objetivo:** Contar mensajes enviados por un usuario.  
+- **Descripción:** Devuelve la cantidad de mensajes emitidos por un usuario.  
+- **Tablas:** `mensajes`.
 
 ---
 
@@ -280,6 +307,16 @@ El flujo básico es:
 - **Descripción:** Valida que el usuario haya completado una estadía en la propiedad antes de permitir la reseña.  
 - **Tablas:** `reservas`, `resenas`.
 
+### `sp_registrar_pago`
+- **Objetivo:** Registrar un pago asociado a una reserva.  
+- **Descripción:** Calcula automáticamente el monto total a partir de las fechas de la reserva y el precio de la propiedad, evitando errores manuales.  
+- **Tablas:** `reservas`, `propiedades`, `pagos`.
+
+### `sp_enviar_mensaje`
+- **Objetivo:** Enviar y registrar un mensaje entre dos usuarios.  
+- **Descripción:** Valida que tanto el emisor como el receptor existan antes de registrar el mensaje con la fecha/hora actual.  
+- **Tablas:** `mensajes`, `usuarios`.
+
 ---
 
 ## 9. Listado de Triggers
@@ -298,6 +335,26 @@ El flujo básico es:
 - **Objetivo:** Actualizar automáticamente reservas vencidas.  
 - **Descripción:** Cambia el estado de la reserva a "finalizada" si ya pasó la fecha de fin.  
 - **Tabla:** `reservas`.
+
+### `trg_validar_pago_reserva`
+- **Objetivo:** Evitar pagos duplicados en reservas.  
+- **Descripción:** Bloquea la inserción de un nuevo pago si ya existe uno para la misma reserva.  
+- **Tabla:** `pagos`.
+
+### `trg_hechos_reservas_insert`
+- **Objetivo:** Poblar la tabla de hechos cuando se crea una reserva.  
+- **Descripción:** Al insertarse una nueva fila en `reservas`, calcula la cantidad de noches de la reserva y crea un registro.  
+- **Tablas:** `reservas`, `hechos_reservas`.
+
+### `trg_hechos_reservas_pago`
+- **Objetivo:** Mantener actualizado el ingreso total en la tabla de hechos.  
+- **Descripción:** Tras la inserción de un pago , suma el `monto` del pago al registro correspondiente en `hechos_reservas`.  
+- **Tablas:** `pagos`, `hechos_reservas`.
+
+### `trg_hechos_reservas_resena`
+- **Objetivo:** Reflejar la calificación final en la tabla de hechos.  
+- **Descripción:** Cuando se inserta una reseña, actualiza el campo `calificacion` en `hechos_reservas`.   
+- **Tablas:** `resenas`, `reservas`, `hechos_reservas`.
 
 ### Triggers de auditoría sobre `usuarios`
 - **Objetivo:** Registrar cambios en usuarios.  
