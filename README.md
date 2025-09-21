@@ -10,7 +10,7 @@
 7. [Listado Funciones](#7-listado-funciones)  
 8. [Listado Stored Procedures](#8-listado-stored-procedures)  
 9. [Listado de Triggers](#9-listado-de-triggers)  
-10. [Análisis de datos](#10-analisis-de-datos)  
+10. [Análisis de datos](#10-análisis-de-datos)  
 
 
 ## 1. Introducción
