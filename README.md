@@ -36,7 +36,7 @@ El flujo básico es:
 3. Una vez finalizada la estancia, el usuario puede dejar una reseña.
 
 ## 4. Diagrama Entidad-Relación
-![Grafico Diagrama E-R](Diagrama_ER2.png)
+![Grafico Diagrama E-R](Diagrama_ER3.png)
 
 ## 5. Listado de Tablas
 
@@ -164,8 +164,6 @@ El flujo básico es:
 | id_usuario_responsable | INT                |            | Usuario responsable de la acción                |
 | fecha_evento         | TIMESTAMP            |            | Fecha y hora del evento                         |
 | detalle              | TEXT                 |            | Información adicional o detalle del cambio      |
-
-[Script SQL Tablas](tablas.sql)
 
 ---
 
@@ -376,9 +374,52 @@ El flujo básico es:
 - **Descripción:** Insertan registros en la auditoría al crear, actualizar o eliminar reseñas.  
 - **Tablas:** `resenas`, `auditoria`.
 
-[Script SQL Creación de Vistas, Funciones, Stored Procedures y Triggers](script_vst_fn_sp_tg.sql)
+[Script SQL Creación Base de Datos](full_script.sql)
 
 [Script SQL Inserción de Datos](ejemplo_inserts.sql)
+
+[Script SQL Tester](tester.sql)
+
+## 10. Análisis de Datos
+
+![Informe](informe.png)
+
+El análisis fue realizado en **Microsoft Power BI** a partir de las tablas del modelo de datos de la base de datos **HeyRoommate**, incluyendo la tabla de hechos `hechos_reservas` y las tablas de dimensiones relacionadas (`usuarios`, `propiedades`, `reservas`, `resenas`, `pagos`, `mensajes`).  
+
+En el informe se reflejan los siguientes puntos principales:  
+
+1. **Distribución de usuarios en la plataforma**  
+   - Este indicador permite dimensionar la base de usuarios y entender la relación entre oferta y demanda.  
+
+2. **Propiedades publicadas**  
+   - Refleja el inventario actual de la plataforma.  
+
+3. **Nivel de satisfacción de los usuarios**  
+   - Este dato se obtiene a partir de las reseñas cargadas por los inquilinos.  
+
+4. **Pagos segmentados por método de pago**  
+   - Permite identificar las preferencias de los usuarios al momento de pagar.  
+
+5. **Reservas segmentadas por estado**  
+   - Este dato ayuda a conocer el nivel de concreción de las reservas.  
+
+6. **Ingresos por ciudad**  
+   - Esta métrica permite identificar que porcentaje representa cada localidad de la facturación total.  
+
+7. **Detalle de ciudades**  
+   - Para cada ciudad se analizan:  
+     - Promedio de calificación.  
+     - Ingreso total acumulado.  
+     - Promedio de noches reservadas.  
+   - Esto permite comparar el rendimiento de cada localidad y elaborar un ranking de las más exitosas.
+  
+7. **Detalle de propiedades**  
+   - Para cada propiedad se analizan:  
+     - Promedio de calificación.  
+     - Ingreso total acumulado.   
+   - Esto permite comparar el rendimiento de cada propiedad y elaborar un ranking de las más exitosas.
+  
+[Dashboards](dashboards.sql)
 
 ---
 
